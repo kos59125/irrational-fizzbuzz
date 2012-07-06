@@ -1,0 +1,26 @@
+using Nemerle.Collections;
+
+using System.Console;
+using System.Math;
+
+def d(n, s)
+{
+   def u = PI / s;
+   def x = (2 * n + 1) * u;
+   Cos(x) >= Cos(u);
+}
+def isFizz = d(_, PI);
+def isBuzz = d(_, E);
+def fizzbuzz(n)
+{
+   match (isFizz(n), isBuzz(n))
+   {
+      | (true, true) => "FizzBuzz";
+      | (true, false) => "Fizz";
+      | (false, true) => "Buzz";
+      | (false, false) => n.ToString();
+   }
+}
+
+$[0..100].Map(fizzbuzz).Iter(System.Console.WriteLine);
+

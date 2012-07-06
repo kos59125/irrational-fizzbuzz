@@ -1,0 +1,50 @@
+using Nemerle;
+using Nemerle.Utility;
+
+using System.Math;
+
+public class FizzBuzzList
+{
+   private n : int;
+   private pi : double;
+   private e : double;
+   [Accessor]
+   private next : LazyValue[FizzBuzzList];
+
+   public this()
+   {
+      this.n = 1;
+      this.pi = PI;
+      this.e = E;
+      this.next = lazy(FizzBuzzList(2, PI, E));
+   }
+
+   private this(n : int, pi : double, e : double)
+   {
+      this.n = n;
+      this.pi = pi;
+      this.e = e;
+      def nextN = n + 1;
+      def nextPi = if (nextN > pi) pi + PI else pi;
+      def nextE = if (nextN > e) e + E else e;
+      this.next = lazy(FizzBuzzList(nextN, nextPi,nextE));
+   }
+
+   public override ToString() : string
+   {
+      match (n == Floor(pi), n == Floor(e))
+      {
+         | (true, true) => "FizzBuzz";
+         | (true, false) => "Fizz";
+         | (false, true) => "Buzz";
+         | (false, false) => n.ToString();
+      }
+   }
+}
+
+mutable fizzbuzz = FizzBuzzList();
+repeat (100)
+{
+   System.Console.WriteLine(fizzbuzz);
+   fizzbuzz = fizzbuzz.Next;
+}
